@@ -19,6 +19,8 @@ fn main() {
     let account2_id = bank
         .create_account(user_id.clone(), AccountCategory::Adult)
         .unwrap();
+    
+    bank.create_card(account_id);
 
     println!("{:?}", bank.accounts.get(&account_id));
     bank.accounts

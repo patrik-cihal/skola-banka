@@ -15,8 +15,13 @@ impl User {
             accounts: vec![],
         }
     }
+
     pub fn generate_id() -> UserId {
         let mut result: UserId = rand::random();
         result
+    }
+
+    pub fn add_account(&mut self, account_id: AccountId) {
+        self.accounts.push(account_id);
     }
 }

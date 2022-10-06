@@ -41,7 +41,7 @@ impl Bank {
     }
     pub fn register_user(&mut self, user: User) -> UserId {
         let user_id = User::generate_id();
-        self.users.insert(user_id.clone(), user);
+        self.users.insert(user_id, user);
         user_id
     }
 
@@ -50,13 +50,27 @@ impl Bank {
         owner_id: UserId,
         category: AccountCategory,
     ) -> Result<AccountId, BankError> {
-        if !self.users.contains_key(&owner_id) {
-            Err(BankError::UserNotFound)
-        } else {
+        if let Some(user) = self.users.get_mut(&owner_id) {
             let account_id = Account::generate_id();
             let account = Account::new(owner_id, category);
-            self.accounts.insert(account_id.clone(), account);
+
+            self.accounts.insert(account_id, account);
+            user.add_account(account_id);
+
             Ok(account_id)
+        }
+        else {
+            Err(BankError::UserNotFound)
+        }
+    }
+    
+    pub fn create_card(&mut self, account_id: AccountId) -> Result<(), BankError> {
+        if let Some(account) = self.accounts.get_mut(&account_id) {
+            
+            Ok(())
+        }
+        else {
+            Err(BankError::AccountNotFound)
         }
     }
 }

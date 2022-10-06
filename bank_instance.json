@@ -1,0 +1,26 @@
+{
+  "accounts": {
+    "11449363440358543187": {
+      "owner_id": 18262736530354285106,
+      "category": "Student",
+      "balance": 0,
+      "card": null
+    },
+    "1462699306333228230": {
+      "owner_id": 18262736530354285106,
+      "category": "Adult",
+      "balance": 1000,
+      "card": null
+    }
+  },
+  "users": {
+    "18262736530354285106": {
+      "first_name": "Patrik",
+      "last_name": "Cihal",
+      "accounts": [
+        11449363440358543187,
+        1462699306333228230
+      ]
+    }
+  }
+}
