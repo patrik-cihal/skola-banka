@@ -1,24 +1,19 @@
-mod account;
-mod user;
-
-use user::User;
-use account::Account;
-
 use std::collections::HashMap;
 use std::error::Error;
 use std::time::Instant;
+use crate::account::AccountCategory;
+use crate::user::User;
 
-type UserId = [u8; 16];
-type AccountId = [u8; 32];
+use super::*;
 
-#[derive(Default)]
-struct Bank {
-    accounts: HashMap<AccountId, Account>,
-    users: HashMap<UserId, User>,
+#[derive(Default, Serialize, Deserialize, Debug)]
+pub struct Bank {
+    pub accounts: HashMap<AccountId, Account>,
+    pub users: HashMap<UserId, User>,
 }
 
 #[derive(Debug)]
-enum BankError {
+pub enum BankError {
     LowBalance,
     AccountNotFound,
     UserNotFound,
@@ -65,6 +60,3 @@ impl Bank {
         }
     }
 }
-
-
-

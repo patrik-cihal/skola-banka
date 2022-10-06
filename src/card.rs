@@ -1,5 +1,9 @@
-#[derive(Debug)]
-struct CardNumber([u16; 4]);
+use std::ops::Add;
+use std::time::{Duration, Instant};
+use super::*;
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CardNumber([u16; 4]);
 
 impl CardNumber {
     pub fn generate() -> Self {
@@ -11,8 +15,17 @@ impl CardNumber {
     }
 }
 
-#[derive(Debug)]
-struct CVC(u16);
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Expiration(u64);
+
+impl Expiration {
+    pub fn generate() -> Self {
+        Self(Instant::now().add(Duration::from_secs(1000)).elapsed().as_secs())
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CVC(u16);
 
 impl CVC {
     pub fn generate() -> Self {
@@ -20,11 +33,11 @@ impl CVC {
     }
 }
 
-#[derive(Debug)]
-struct Card {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Card {
     number: CardNumber,
     cvc: CVC,
-    expiration: Instant,
+    expiration: Expiration,
 }
 
 impl Card {
@@ -32,7 +45,7 @@ impl Card {
         Self {
             number: CardNumber::generate(),
             cvc: CVC::generate(),
-            expiration: Instant::default(),
+            expiration: Expiration::generate(),
         }
     }
 }

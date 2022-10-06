@@ -1,8 +1,10 @@
-#[derive(Debug, Default)]
-struct User {
+use crate::{AccountId, UserId, Serialize, Deserialize};
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub struct User {
     first_name: String,
     last_name: String,
-    accounts: Vec<Account>,
+    accounts: Vec<AccountId>,
 }
 
 impl User {
@@ -14,10 +16,7 @@ impl User {
         }
     }
     pub fn generate_id() -> UserId {
-        let mut result: UserId = Default::default();
-        for val in &mut result {
-            *val = rand::random();
-        }
+        let mut result: UserId = rand::random();
         result
     }
 }

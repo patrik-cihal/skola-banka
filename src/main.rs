@@ -1,5 +1,12 @@
-mod bank;
-use bank::Bank;
+use bank_lib::*;
+
+use std::fs::File;
+use std::io::Write;
+use std::env;
+
+mod serializer;
+use serializer::BankSerializer;
+
 
 fn main() {
     let mut bank = Bank::default();
@@ -22,4 +29,13 @@ fn main() {
     bank.transfer_money(account_id, account2_id, 1000).unwrap();
     println!("{:?}", bank.accounts.get(&account_id));
     println!("{:?}", bank.accounts.get(&account2_id));
+
+    BankSerializer::save(&bank);
+
+    let serialized_bank = serde_json::to_string(&bank).unwrap();
+    let deserialized_bank = serde_json::from_str::<Bank>(&serialized_bank).unwrap();
+
+    println!("{:?}", deserialized_bank);
+
+
 }

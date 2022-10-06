@@ -1,6 +1,8 @@
+use super::*;
 
-#[derive(Debug, Default)]
-struct Account {
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub struct Account {
     owner_id: UserId,
     category: AccountCategory,
     balance: u64,
@@ -29,16 +31,13 @@ impl Account {
         Ok(())
     }
     pub fn generate_id() -> AccountId {
-        let mut result: AccountId = Default::default();
-        for val in &mut result {
-            *val = rand::random();
-        }
+        let mut result: AccountId = rand::random();
         result
     }
 }
 
-#[derive(Debug, Default)]
-enum AccountCategory {
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub enum AccountCategory {
     #[default]
     Adult,
     Student,
