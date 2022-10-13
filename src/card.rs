@@ -2,7 +2,7 @@ use std::ops::Add;
 use std::time::{Duration, Instant};
 use super::*;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Clone)]
 pub struct CardNumber([u16; 4]);
 
 impl CardNumber {
@@ -35,13 +35,13 @@ impl CVC {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Card {
-    number: CardNumber,
-    cvc: CVC,
-    expiration: Expiration,
+    pub number: CardNumber,
+    pub cvc: CVC,
+    pub expiration: Expiration,
 }
 
 impl Card {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             number: CardNumber::generate(),
             cvc: CVC::generate(),

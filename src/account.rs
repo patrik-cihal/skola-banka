@@ -6,7 +6,7 @@ pub struct Account {
     owner_id: UserId,
     category: AccountCategory,
     balance: u64,
-    card: Option<Card>,
+    cards: Vec<CardNumber>
 }
 
 impl Account {
@@ -15,7 +15,7 @@ impl Account {
             owner_id,
             category,
             balance: 0,
-            card: None,
+            cards: vec![]
         }
     }
     pub fn decrease_balance(&mut self, amount: u64) -> Result<(), BankError> {
@@ -33,6 +33,9 @@ impl Account {
     pub fn generate_id() -> AccountId {
         let mut result: AccountId = rand::random();
         result
+    }
+    pub fn register_card(&mut self, card_number: CardNumber) {
+        self.cards.push(card_number);
     }
 }
 

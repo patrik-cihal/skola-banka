@@ -8,6 +8,7 @@ mod account;
 pub use account::{Account, AccountCategory};
 
 mod card;
+pub use card::CardNumber;
 
 pub type UserId = u64;
 pub type AccountId = u64;

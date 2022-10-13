@@ -1,8 +1,9 @@
-use bank_lib::*;
+use banka_delta::*;
 
 use std::fs::File;
 use std::io::Write;
 use std::env;
+use std::path::Path;
 
 mod serializer;
 use serializer::BankSerializer;
@@ -14,30 +15,26 @@ fn main() {
     let user_id = bank.register_user(user);
 
     let account_id = bank
-        .create_account(user_id.clone(), AccountCategory::Student)
+        .create_account(user_id, AccountCategory::Student)
         .unwrap();
     let account2_id = bank
-        .create_account(user_id.clone(), AccountCategory::Adult)
+        .create_account(user_id, AccountCategory::Adult)
         .unwrap();
     
-    bank.create_card(account_id);
+    bank.create_card(account_id).unwrap();
 
-    println!("{:?}", bank.accounts.get(&account_id));
-    bank.accounts
-        .get_mut(&account_id)
-        .unwrap()
-        .increase_balance(1000);
-    println!("{:?}", bank.accounts.get(&account_id));
+    println!("{:?}", bank.get_account(account_id).unwrap());
+
+    bank.reward_account(account_id, 1000).unwrap();
+
+    println!("{:?}", bank.get_account(account_id));
+
     bank.transfer_money(account_id, account2_id, 1000).unwrap();
-    println!("{:?}", bank.accounts.get(&account_id));
-    println!("{:?}", bank.accounts.get(&account2_id));
+    println!("{:?}", bank.get_account(account_id));
+    println!("{:?}", bank.get_account(account2_id));
 
     BankSerializer::save(&bank);
+    let bank = BankSerializer::load(Path::new("bank_instance.json"));
 
-    let serialized_bank = serde_json::to_string(&bank).unwrap();
-    let deserialized_bank = serde_json::from_str::<Bank>(&serialized_bank).unwrap();
-
-    println!("{:?}", deserialized_bank);
-
-
+    println!("{:?}", bank);
 }
