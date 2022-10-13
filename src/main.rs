@@ -33,7 +33,8 @@ fn main() {
     println!("{:?}", bank.get_account(account_id));
     println!("{:?}", bank.get_account(account2_id));
 
-    BankSerializer::save(&bank);
+    FileStorage::save(&bank, Path::new("bank_instance.json")).unwrap();
+
     let bank = BankSerializer::load(Path::new("bank_instance.json"));
 
     println!("{:?}", bank);

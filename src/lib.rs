@@ -1,3 +1,6 @@
+mod storage;
+pub use storage::{FileStorage, Storage};
+
 mod bank;
 pub use bank::Bank;
 
@@ -12,6 +15,7 @@ pub use card::CardNumber;
 
 pub type UserId = u64;
 pub type AccountId = u64;
+pub type CardId = u64;
 
 pub use serde::{Serialize, Deserialize};
 

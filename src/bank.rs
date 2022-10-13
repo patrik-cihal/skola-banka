@@ -1,7 +1,4 @@
 use std::collections::HashMap;
-use std::error::Error;
-use std::time::Instant;
-use serde::Serializer;
 use crate::account::AccountCategory;
 use crate::user::User;
 
@@ -11,7 +8,7 @@ use super::*;
 pub struct Bank {
     accounts: HashMap<AccountId, Account>,
     pub users: HashMap<UserId, User>,
-    cards: HashMap<CardNumber, Card>
+    cards: HashMap<CardId, Card>
 }
 
 #[derive(Debug)]
@@ -68,9 +65,9 @@ impl Bank {
     
     pub fn create_card(&mut self, account_id: AccountId) -> Result<(), BankError> {
         if let Some(account) = self.accounts.get_mut(&account_id) {
-            let card = Card::new();
-            self.cards.insert(card.number.clone(), card);
-            account.register_card(card.number);
+            let card_id = rand::random();
+            account.register_card(card_id);
+            self.cards.insert(card_id, Card::new());
 
             Ok(())
         }

@@ -1,12 +1,11 @@
 use super::*;
 
-
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct Account {
     owner_id: UserId,
     category: AccountCategory,
     balance: u64,
-    cards: Vec<CardNumber>
+    cards: Vec<CardId>
 }
 
 impl Account {
@@ -34,7 +33,7 @@ impl Account {
         let mut result: AccountId = rand::random();
         result
     }
-    pub fn register_card(&mut self, card_number: CardNumber) {
+    pub fn register_card(&mut self, card_number: CardId) {
         self.cards.push(card_number);
     }
 }
