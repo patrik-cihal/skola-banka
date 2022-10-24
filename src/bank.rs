@@ -1,6 +1,6 @@
-use std::collections::HashMap;
 use crate::account::AccountCategory;
 use crate::user::User;
+use std::collections::HashMap;
 
 use super::*;
 
@@ -8,7 +8,7 @@ use super::*;
 pub struct Bank {
     accounts: HashMap<AccountId, Account>,
     pub users: HashMap<UserId, User>,
-    cards: HashMap<CardId, Card>
+    cards: HashMap<CardId, Card>,
 }
 
 #[derive(Debug)]
@@ -57,12 +57,11 @@ impl Bank {
             user.add_account(account_id);
 
             Ok(account_id)
-        }
-        else {
+        } else {
             Err(BankError::UserNotFound)
         }
     }
-    
+
     pub fn create_card(&mut self, account_id: AccountId) -> Result<(), BankError> {
         if let Some(account) = self.accounts.get_mut(&account_id) {
             let card_id = rand::random();
@@ -70,8 +69,7 @@ impl Bank {
             self.cards.insert(card_id, Card::new());
 
             Ok(())
-        }
-        else {
+        } else {
             Err(BankError::AccountNotFound)
         }
     }
@@ -83,10 +81,20 @@ impl Bank {
     pub fn reward_account(&mut self, account_id: AccountId, money: u64) -> Result<(), BankError> {
         if let Some(account) = self.accounts.get_mut(&account_id) {
             account.increase_balance(money)
-        }
-        else {
+        } else {
             Err(BankError::AccountNotFound)
         }
     }
-
+    pub fn change_account_type(
+        &mut self,
+        account_id: AccountId,
+        new_account_category: AccountCategory,
+    ) -> Result<(), BankError> {
+        if let Some(account) = self.accounts.get_mut(&account_id) {
+            account.category = new_account_category;
+            Ok(())
+        } else {
+            Err(BankError::AccountNotFound)
+        }
+    }
 }

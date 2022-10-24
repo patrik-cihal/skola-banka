@@ -3,9 +3,9 @@ use super::*;
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct Account {
     owner_id: UserId,
-    category: AccountCategory,
+    pub category: AccountCategory,
     balance: u64,
-    cards: Vec<CardId>
+    cards: Vec<CardId>,
 }
 
 impl Account {
@@ -14,7 +14,7 @@ impl Account {
             owner_id,
             category,
             balance: 0,
-            cards: vec![]
+            cards: vec![],
         }
     }
     pub fn decrease_balance(&mut self, amount: u64) -> Result<(), BankError> {
@@ -30,15 +30,15 @@ impl Account {
         Ok(())
     }
     pub fn generate_id() -> AccountId {
-        let mut result: AccountId = rand::random();
-        result
+        rand::random()
     }
     pub fn register_card(&mut self, card_number: CardId) {
         self.cards.push(card_number);
     }
 }
 
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize, EnumVariantNames, EnumString, FromRepr)]
+#[strum(serialize_all = "camel_case")]
 pub enum AccountCategory {
     #[default]
     Adult,
