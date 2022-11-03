@@ -24,3 +24,8 @@ pub use card::Card;
 pub use std::collections::HashMap;
 
 pub use strum::{EnumString, EnumVariantNames, FromRepr};
+
+mod ui;
+pub use ui::UIInterface;
+
+const BANK_SAVE_PATH: &str = "bank_instance.json";

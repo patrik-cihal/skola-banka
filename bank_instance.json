@@ -1,10 +1,19 @@
 {
-  "accounts": {},
+  "accounts": {
+    "14936163059071847073": {
+      "owner_id": 1055026891639127522,
+      "category": "Adult",
+      "balance": 0,
+      "cards": []
+    }
+  },
   "users": {
-    "16176014954919381557": {
+    "1055026891639127522": {
       "first_name": "Patrik",
       "last_name": "Cihal",
-      "accounts": []
+      "accounts": [
+        14936163059071847073
+      ]
     }
   },
   "cards": {}
