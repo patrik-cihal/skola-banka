@@ -7,6 +7,12 @@ use strum::VariantNames;
 
 use super::*;
 
+const CREATE_ACCOUNT_ACTION: &str = "Create account";
+const EDIT_ACCOUNT_ACTION: &str = "Edit account";
+const SAVE_ACTION: &str = "Save";
+const LOAD_ACTION: &str = "Load";
+const DEBUG_ACTION: &str = "Debug";
+
 pub struct UIInterface {
     bank: Bank,
     user_id: Option<UserId>,
@@ -18,13 +24,9 @@ impl UIInterface {
     }
 
     pub fn main_menu(&mut self) {
-        const CREATE_ACCOUNT_ACTION: &str = "Create account";
-        const EDIT_ACCOUNT_ACTION: &str = "Edit account";
-        const SAVE_ACTION: &str = "Save";
-        const LOAD_ACTION: &str = "Load";
-        const DEBUG_ACTION: &str = "Debug";
-
         let logged_in = self.user_id.is_some();
+
+        // filters action based on booleans passed inside tuple
         let actions: Vec<&str> = vec![
             (CREATE_ACCOUNT_ACTION, vec![logged_in]),
             (EDIT_ACCOUNT_ACTION, vec![logged_in]),
@@ -34,7 +36,7 @@ impl UIInterface {
         ]
         .iter()
         .filter_map(|(txt, conds)| {
-            if conds.into_iter().filter(|&&x| x).count() == conds.len() {
+            if conds.into_iter().all(|x| *x) {
                 Some(*txt)
             } else {
                 None

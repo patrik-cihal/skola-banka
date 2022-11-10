@@ -9,6 +9,8 @@ pub struct Bank {
     accounts: HashMap<AccountId, Account>,
     pub users: HashMap<UserId, User>,
     cards: HashMap<CardId, Card>,
+    #[serde(skip)]
+    publisher: Publisher,
 }
 
 #[derive(Debug)]
@@ -16,6 +18,12 @@ pub enum BankError {
     LowBalance,
     AccountNotFound,
     UserNotFound,
+}
+
+impl Observable for Bank {
+    fn events(&mut self) -> &mut Publisher {
+        &mut self.publisher
+    }
 }
 
 impl Bank {
@@ -53,8 +61,11 @@ impl Bank {
             let account_id = Account::generate_id();
             let account = Account::new(owner_id, category);
 
-            self.accounts.insert(account_id, account);
+            self.accounts.insert(account_id, account.clone());
             user.add_account(account_id);
+
+            self.publisher
+                .notify(SubscribeEvent::CreateAccount, format!("{:?}", account));
 
             Ok(account_id)
         } else {

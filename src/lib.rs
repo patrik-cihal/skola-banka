@@ -13,6 +13,11 @@ pub use account::{Account, AccountCategory};
 mod card;
 pub use card::CardNumber;
 
+mod observer;
+pub use observer::Observable;
+pub use observer::Publisher;
+pub use observer::SubscribeEvent;
+
 pub type UserId = u64;
 pub type AccountId = u64;
 pub type CardId = u64;

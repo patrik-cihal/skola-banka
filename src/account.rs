@@ -1,6 +1,6 @@
 use super::*;
 
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize, Eq, PartialEq, Clone)]
 pub struct Account {
     owner_id: UserId,
     pub category: AccountCategory,
@@ -37,7 +37,18 @@ impl Account {
     }
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, EnumVariantNames, EnumString, FromRepr)]
+#[derive(
+    Debug,
+    Default,
+    Serialize,
+    Deserialize,
+    EnumVariantNames,
+    EnumString,
+    FromRepr,
+    Eq,
+    PartialEq,
+    Clone,
+)]
 #[strum(serialize_all = "camel_case")]
 pub enum AccountCategory {
     #[default]
